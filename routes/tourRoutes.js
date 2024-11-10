@@ -1,6 +1,8 @@
 const express = require('express');
-const tourController = require('./../controllers/tourController');
+
 const router = express.Router();
+
+const tourController = require('../controllers/tourController');
 
 const { getAllTours, getTour, updateTour, deleteTour, createTour, checkBody } =
   tourController;
