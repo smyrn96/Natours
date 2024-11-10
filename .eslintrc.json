@@ -2,12 +2,7 @@
   "extends": ["airbnb", "prettier", "plugin:node/recommended"],
   "plugins": ["prettier"],
   "rules": {
-    "node/no-unpublished-import": [
-      "error",
-      {
-        "allowModules": ["mongoose"]
-      }
-    ],
+    "node/no-unpublished-require": false,
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "prettier/prettier": "error",
     "spaced-comment": "off",
