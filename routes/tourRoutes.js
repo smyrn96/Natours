@@ -11,9 +11,12 @@ const {
   deleteTour,
   createTour,
   getFiveCheapTours,
+  getTourStats,
 } = tourController;
 
 // router.param('id', tourController.checkID);
+
+router.route('/tour-stats').get(getTourStats);
 
 router.route('/top-5-cheap').get(getFiveCheapTours, getAllTours);
 
