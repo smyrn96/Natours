@@ -12,6 +12,7 @@ const {
   createTour,
   getFiveCheapTours,
   getTourStats,
+  getMonthlyPlan,
 } = tourController;
 
 // router.param('id', tourController.checkID);
@@ -19,6 +20,8 @@ const {
 router.route('/tour-stats').get(getTourStats);
 
 router.route('/top-5-cheap').get(getFiveCheapTours, getAllTours);
+
+router.route('/monthly-plan/:year').get(getMonthlyPlan);
 
 router.route('/').get(getAllTours).post(createTour);
 
