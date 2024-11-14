@@ -27,7 +27,11 @@ const tourSchema = new mongoose.Schema(
         message: 'Difficulty can only be easy, medium and difficult',
       },
     },
-    ratingsAverage: { type: Number, default: 4.5 },
+    ratingsAverage: {
+      type: Number,
+      default: 4.5,
+      max: [5, 'The tour must have a ratings average less than 5'],
+    },
     ratingsQuantity: { type: Number, default: 0 },
     priceDiscount: {
       type: Number,
