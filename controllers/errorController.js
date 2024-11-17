@@ -30,6 +30,16 @@ const createCastErrorDB = (err) => {
   return new AppError(message, 400);
 };
 
+const createJsonWebTokenError = () => {
+  const message = 'Invalid JWT token. Please login.';
+  return new AppError(message, 401);
+};
+
+const createTokenExpiredError = () => {
+  const message = 'JWT token is expired. Please login.';
+  return new AppError(message, 401);
+};
+
 const createDuplicateFieldValuErroreDB = (err) => {
   const value = err.errmsg.match(/(["'])(?:(?=(\\?))\2.)*?\1/)[0];
   const message = `Duplicate value: ${value}`;
@@ -61,6 +71,14 @@ exports.errorController = (err, req, res, next) => {
 
     if (error.name === 'ValidationError') {
       error = createValidationErroreDB(error);
+    }
+
+    if (error.name === 'JsonWebTokenError') {
+      error = createJsonWebTokenError();
+    }
+
+    if (error.name === 'TokenExpiredError') {
+      error = createTokenExpiredError();
     }
 
     sendErrorProd(error, res);
