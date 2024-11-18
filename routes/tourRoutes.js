@@ -29,6 +29,14 @@ router
   .get(authController.protectEndpoints, getAllTours)
   .post(createTour);
 
-router.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
+router
+  .route('/:id')
+  .get(getTour)
+  .patch(updateTour)
+  .delete(
+    authController.protectEndpoints,
+    authController.restrictTo('admin', 'lead-guide'),
+    deleteTour,
+  );
 
 module.exports = router;

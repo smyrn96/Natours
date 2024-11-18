@@ -11,11 +11,12 @@ const signToken = (id) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const { name, email, password, passwordConfirm } = req.body;
+  const { name, email, password, passwordConfirm, role } = req.body;
   const newUser = await User.create({
     name,
     email,
     password,
+    role,
     passwordConfirm,
   });
 
@@ -66,7 +67,7 @@ exports.protectEndpoints = catchAsync(async (req, res, next) => {
     process.env.JWT_SECRET,
   );
 
-  const currentUser = User.findById(tokenValidation.id);
+  const currentUser = await User.findById(tokenValidation.id);
   if (!currentUser) {
     return next(new AppError('The user does no longer exists.', 401));
   }
@@ -80,3 +81,19 @@ exports.protectEndpoints = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    const currentUserRole = req.user.role;
+
+    if (!roles.includes(currentUserRole)) {
+      return next(
+        new AppError(
+          'You do not have a permission to perform this action',
+          403,
+        ),
+      );
+    }
+    next();
+  };
+};
