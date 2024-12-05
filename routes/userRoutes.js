@@ -13,6 +13,7 @@ const {
   deleteUser,
   updateMe,
   deleteMe,
+  getMe,
 } = userController;
 
 const {
@@ -22,21 +23,28 @@ const {
   forgotPassword,
   protectEndpoints,
   updatePassword,
+  restrictTo,
 } = authController;
 
 router.route('/forgot-password').post(forgotPassword);
 
 router.route('/reset-pasword').post(resetPassword);
 
-router.route('/update-password').patch(protectEndpoints, updatePassword);
-
-router.route('/update-me').patch(protectEndpoints, updateMe);
-
-router.route('/delete-me').patch(protectEndpoints, deleteMe);
-
 router.route('/signup').post(signup);
 
 router.route('/login').post(login);
+
+router.use(protectEndpoints);
+
+router.route('/update-password').patch(updatePassword);
+
+router.route('/update-me').patch(updateMe);
+
+router.route('/delete-me').patch(deleteMe);
+
+router.route('/get-me').get(getMe, getUser);
+
+router.use(restrictTo('admin'));
 
 router.route('/').get(getAllUsers).post(createUser);
 

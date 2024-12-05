@@ -28,13 +28,19 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, 'A user must have a password'],
     minLength: [8, 'The password must have at least 8 characters'],
-    maxLength: [20, 'The name length has to be less than 20 characters long'],
+    maxLength: [
+      100,
+      'The password length has to be less than 100 characters long',
+    ],
     select: false,
   },
   passwordConfirm: {
     type: String,
     minLength: [8, 'The password must have at least 8 characters'],
-    maxLength: [20, 'The name length has to be less than 20 characters long'],
+    maxLength: [
+      100,
+      'The password length has to be less than 100 characters long',
+    ],
     validate: {
       validator: function (val) {
         return val === this.password;
